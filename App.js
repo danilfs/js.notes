@@ -111,6 +111,8 @@ function getNotesTemplate(note , index) {
   </li>`
 }
 
+const a = 1
+
 
 
 
