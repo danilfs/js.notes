@@ -15,6 +15,8 @@ const notes = [{
 
 function render () {
 
+    listElement.innerHTML = ''
+
         for(let i = 0; i < notes.length ; i++) {
             listElement.insertAdjacentHTML('beforeend',getNotesTemplate(notes[i], i))
         }
@@ -50,21 +52,52 @@ createBtn.onclick = () => {
         title : inputElement.value ,
         completed : false
     }
-    listElement.insertAdjacentHTML('beforeend',
+
+    notes.push(newNote)
+    render()
+    // listElement.insertAdjacentHTML('beforeend',
 
 //         `<ul id="list">
 //     <li>
 //         <span>${inputElement.value}</span>
 //     </li>
 // </ul>`
-        getNotesTemplate(newNote)
+    //     getNotesTemplate(newNote)
 
-    )
+    // )
 
     inputElement.value = ''
 }
 
-// Не работает почему-то функция getNotesTemplate
+// listElement.onClick = function(event) {
+//     if(event.target.dataset.index){
+//         const index = parseInt(event.target.dataset.index)
+//         const type = event.target.dataset.type
+//         if(type === 'toggle') {
+//             notes[index].completed = !notes[index].completed
+//         }
+//         else if (type === 'remove') {
+//             notes.splice(index, 1)
+//         }
+//         render()
+//     }
+// }
+
+listElement.onclick = function (event) {
+    console.log(event.target.dataset)
+    // if (event.target.dataset.index) {
+    //   const index = parseInt(event.target.dataset.index)
+    //   const type = event.target.dataset.type
+  
+    //   if (type === 'toggle') {
+    //     notes[index].completed = !notes[index].completed
+    //   } else if (type === 'remove') {
+    //     notes.splice(index, 1)
+    //   }
+  
+    //   render()
+    // }
+  }
 
 function getNotesTemplate(note , index) {
     return `<li
@@ -72,11 +105,14 @@ function getNotesTemplate(note , index) {
   >
     <span class = "${note.completed ? 'text-decoration-line-through' : ''}">${note.title}</span>
     <span>
-      <span class="btn btn-small btn-${note.completed ? 'warning' : 'success'}" data-index="${index}">&check;</span>
-      <span class="btn btn-small btn-danger">&times;</span>
+      <span class="btn btn-small btn-${note.completed ? 'warning' : 'success'}" data-index="${index}" data-type = "toggle">&check;</span>
+      <span class="btn btn-small btn-danger" data-index="${index}" data-type = "remove">&times;</span>
     </span>
   </li>`
 }
+
+
+
 
 
 
